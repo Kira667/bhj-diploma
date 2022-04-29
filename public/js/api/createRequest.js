@@ -7,8 +7,8 @@ const createRequest = async (options = {}) => {
   
   if (method === 'GET') {
     await requestGet({ url, data, callback });
-  } else if (method === 'POST') {
-    await requestPost({ url, data, callback });
+  } else {
+    await requestNoGet({ url, data, method, callback });
   } 
 };
 
@@ -31,8 +31,8 @@ async function requestGet(options = {}) {
 
 }
 
-async function requestPost(options = {}) {
-  const { url, data, callback } = options;
+async function requestNoGet(options = {}) {
+  const { url, data, callback, method } = options;
   const formData = new FormData();
 
   for (const dataKey in data) {
@@ -40,7 +40,7 @@ async function requestPost(options = {}) {
   }
 
   await fetch(url, {
-    method: 'POST',
+    method: method,
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
     },
