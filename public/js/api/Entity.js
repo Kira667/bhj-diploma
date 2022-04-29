@@ -46,5 +46,3 @@ class Entity {
     });
   }
 }
-
-// Entity.list();

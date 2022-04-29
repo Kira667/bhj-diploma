@@ -3,7 +3,7 @@
  * на сервер.
  * */
 const createRequest = async (options = {}) => {
-  const { url, data, method, callback } = options;
+  const { url, data = {}, method, callback } = options;
   
   if (method === 'GET') {
     await requestGet({ url, data, callback });
@@ -57,24 +57,41 @@ async function requestNoGet(options = {}) {
 } 
 
 function createUrlBasedOnParams(baseUrl, data) {
-  const url = new URL(baseUrl);
-  for (const dataKey in data) {
-    url.searchParams.append(dataKey, data[dataKey]);
+  let url = baseUrl;
+
+  const entriesData = Object.entries(data);
+  console.log(entriesData);
+
+  if (entriesData.length > 0) {
+    url = `${url}?`;
+
+    for (let i = 0; i < entriesData.length; i++) {
+      const key = entriesData[i][0];
+      const value =  entriesData[i][1]
+
+      if (i === entriesData.length - 1) { // если это самый последний элемент массива
+        url = `${url}${key}=${value}`;
+      } else {
+        url = `${url}${key}=${value}&`;
+      }
+    }
+
   }
-  return url.href;
+
+  return url;
 }
 
-// createRequest({
-//   url: 'https://jsonplaceholder.typicode.com/todos/',
-//   data: {
-//     mail: 'ivan@biz.pro',
-//     password: 'odinodin',
-//     credit: 34000
-//   },
-//   method: 'POST',
-//   callback: ( err, response ) => {
-//     console.log( err ); // null
-//     console.log( response ); // ответ
-//   }
-// });
+createRequest({
+  url: 'https://jsonplaceholder.typicode.com/todos/',
+  data: {
+    mail: 'ivan@biz.pro',
+    password: 'odinodin',
+    credit: 34000
+  },
+  method: 'GET',
+  callback: ( err, response ) => {
+    console.log( err ); // null
+    console.log( response ); // ответ
+  }
+});
 
