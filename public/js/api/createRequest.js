@@ -60,7 +60,6 @@ function createUrlBasedOnParams(baseUrl, data) {
   let url = baseUrl;
 
   const entriesData = Object.entries(data);
-  console.log(entriesData);
 
   if (entriesData.length > 0) {
     url = `${url}?`;
@@ -90,8 +89,8 @@ createRequest({
   },
   method: 'GET',
   callback: ( err, response ) => {
-    console.log( err ); // null
-    console.log( response ); // ответ
+    // console.log( err, 'createRequest err' ); // null
+    // console.log( response, 'createRequest response' ); // ответ
   }
 });
 
