@@ -19,7 +19,8 @@ async function requestGet(options = {}) {
   await fetch(fullUrl, {
     method: 'GET',
     headers: {
-      'Coentent-Type': 'application/json'
+      'Content-Type': 'application/json',
+    	'Accept': 'application/json'
   }})
   .then(res => {
     if (res.ok === true) {
@@ -42,7 +43,8 @@ async function requestNoGet(options = {}) {
   await fetch(url, {
     method: method,
     headers: {
-      'Content-Type': 'application/json;charset=utf-8'
+      'Content-Type': 'application/json',
+    	'Accept': 'application/json'
     },
     body: JSON.stringify(formData)
   })
@@ -80,17 +82,17 @@ function createUrlBasedOnParams(baseUrl, data) {
   return url;
 }
 
-createRequest({
-  url: 'https://jsonplaceholder.typicode.com/todos/',
-  data: {
-    mail: 'ivan@biz.pro',
-    password: 'odinodin',
-    credit: 34000
-  },
-  method: 'GET',
-  callback: ( err, response ) => {
-    // console.log( err, 'createRequest err' ); // null
-    // console.log( response, 'createRequest response' ); // ответ
-  }
-});
+// createRequest({
+//   url: 'https://jsonplaceholder.typicode.com/todos/',
+//   data: {
+//     mail: 'ivan@biz.pro',
+//     password: 'odinodin',
+//     credit: 34000
+//   },
+//   method: 'GET',
+//   callback: ( err, response ) => {
+//     // console.log( err, 'createRequest err' ); // null
+//     // console.log( response, 'createRequest response' ); // ответ
+//   }
+// });
 

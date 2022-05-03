@@ -3,6 +3,7 @@ const { PORT, PUBLIC_PATH, INDEX_FILE } = process.env;
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 
@@ -17,7 +18,7 @@ if(!db.get('users').value())
 
 const app = express();
 app.use(express.static(`${__dirname}/${PUBLIC_PATH}`));
-
+app.use(cors());
 app.use(cookieParser());
 app.use(cookieSession({
   name: 'session',

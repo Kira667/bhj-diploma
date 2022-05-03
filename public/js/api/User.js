@@ -4,14 +4,16 @@
  * Имеет свойство URL, равное '/user'.
  * */
 class User {
-  static URL = '/user';
+  static path = '/user';
+	static URL = `http://localhost:8000${User.path}`;
+	static keyLocalStorage = 'user';
 
   /**
    * Устанавливает текущего пользователя в
    * локальном хранилище.
    * */
   static setCurrent(user) {
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem(User.keyLocalStorage, JSON.stringify(user));
   }
 
   /**
@@ -19,6 +21,7 @@ class User {
    * пользователе из локального хранилища.
    * */
   static unsetCurrent() {
+		localStorage.removeItem(User.keyLocalStorage);
 
   }
 
@@ -27,7 +30,7 @@ class User {
    * из локального хранилища
    * */
   static current() {
-		const user = JSON.parse(localStorage.getItem('user'));
+		const user = JSON.parse(localStorage.getItem(User.keyLocalStorage));
 
 		if (Object.prototype.toString.call(user) === '[object Object]') {
 			return user;
@@ -41,7 +44,17 @@ class User {
    * авторизованном пользователе.
    * */
   static fetch(callback) {
-
+		createRequest({
+			url: User.URL + '/current',
+			method: 'GET',
+			responseType: 'json',
+			callback: (err, response) => {
+				console.log(response);
+				response.json().then(data => {
+					console.log(data);
+				});
+			}
+		});
   }
 
   /**
@@ -52,10 +65,10 @@ class User {
    * */
   static login(data, callback) {
     createRequest({
-      url: this.URL + '/login',
+      url: User.URL + '/login',
       method: 'POST',
       responseType: 'json',
-      data,
+      data: data,
       callback: (err, response) => {
         if (response && response.user) {
           this.setCurrent(response.user);
@@ -83,3 +96,4 @@ class User {
 
   }
 }
+
