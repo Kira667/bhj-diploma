@@ -20,6 +20,13 @@ class Sidebar {
   static initToggleButton() {
 		const sidebarToggleNode = document.querySelector('.sidebar-toggle');
 		console.log(sidebarToggleNode);
+		sidebarToggleNode.addEventListener('click', (e) => {
+			if (document.body.classList.contains('sidebar-collapse')) {
+				document.body.classList.remove('sidebar-open', 'sidebar-collapse')
+			} else {
+				document.body.classList.add('sidebar-open', 'sidebar-collapse')
+			}
+		});
   }
 
   /**
