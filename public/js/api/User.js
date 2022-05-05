@@ -6,7 +6,7 @@
  * */
 class User {
   static path = '/user';
-	static URL = `http://localhost:8000${User.path}`;
+	static URL = `http://localhost:8000${this.path}`;
 	static keyLocalStorage = 'user';
 
   /**

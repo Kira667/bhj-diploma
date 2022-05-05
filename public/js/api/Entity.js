@@ -4,7 +4,7 @@
  * */
 class Entity {
   static path = '';
-	static URL = `http://localhost:8000${User.path}`;
+	static URL = `http://localhost:8000${this.path}`;
 
   /**
    * Запрашивает с сервера список данных.

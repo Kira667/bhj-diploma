@@ -5,7 +5,7 @@
  * */
 class Account extends Entity {
 	static path = '/account';
-	static URL = `http://localhost:8000${User.path}`;
+	static URL = `http://localhost:8000${this.path}`;
   /**
    * Получает информацию о счёте
    * */
