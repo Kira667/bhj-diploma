@@ -1,5 +1,11 @@
 {
   "users": [
+    {
+      "name": "Vlad",
+      "email": "test@test123.ru",
+      "password": "abracadabra",
+      "id": "11jm19kl2srnz05"
+    }
   ],
   "accounts": [
     {

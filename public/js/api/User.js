@@ -1,3 +1,4 @@
+
 /**
  * Класс User управляет авторизацией, выходом и
  * регистрацией пользователя из приложения
@@ -30,7 +31,13 @@ class User {
    * из локального хранилища
    * */
   static current() {
-		const user = JSON.parse(localStorage.getItem(User.keyLocalStorage));
+		const localStorageVal = localStorage.getItem(User.keyLocalStorage);
+
+		if (localStorageVal === null) {
+			return undefined;
+		}
+
+		const user = JSON.parse(localStorageVal);
 
 		if (Object.prototype.toString.call(user) === '[object Object]') {
 			return user;
@@ -50,16 +57,13 @@ class User {
 			responseType: 'json',
 			callback: (err, response) => {
 				response.json()
-				.then(data => {
-					if (data.success === false) { // Если пользователь не авторизован
-						callback({
-							success: false,
-							error: 'Необходима авторизация'
-						}, { success: false, user: undefined });
+				.then(dataRes => {
+					if (dataRes.success === false) { // Если пользователь не авторизован
+						callback(err, { success: false, error: 'Необходима авторизация' });
 						User.unsetCurrent();
 					} else {
-						callback(null, { succes: true, user: data.user});
-						User.setCurrent(data.user);
+						callback(err, dataRes);
+						User.setCurrent(dataRes.user);
 					}
 				});
 			}
@@ -79,10 +83,15 @@ class User {
       responseType: 'json',
       data: data,
       callback: (err, response) => {
-        if (response && response.user) {
-          this.setCurrent(response.user);
-        }
-        callback(err, response);
+				response.json()
+				.then(dataRes => {
+					
+					if (dataRes.success === true) {
+						callback(err, dataRes);
+					} else {
+						callback(err, dataRes);
+					}
+				})
       }
     });
   }
@@ -100,10 +109,14 @@ class User {
 			responseType: 'json',
 			data: data,
 			callback: (err, response) => {
-				console.log(response);
 				response.json()
 				.then(dataRes => {
-					console.log(dataRes);
+					if (dataRes.success === true) {
+						User.setCurrent(dataRes.user);
+						callback(err, dataRes);
+					} else {
+						callback(err, dataRes);
+					}
 				});
 			}
 		});
@@ -114,16 +127,30 @@ class User {
    * выхода необходимо вызвать метод User.unsetCurrent
    * */
   static logout(callback) {
-
+		createRequest({
+			url: User.URL + '/logout',
+			method: 'POST',
+			responseType: 'json',
+			callback: (err, response) => {
+				response.json()
+				.then(dataRes => {
+					if (dataRes.success === true) {
+						callback(err, dataRes);
+						User.unsetCurrent();
+					} else {
+						callback(err, dataRes);
+					}
+				})
+			}
+		})
   }
 }
 
 // const data = {
-//   name: 'Vlad',
-//   email: 'test@test123.ru',
+//   email: 'test@test.ru',
 //   password: 'abracadabra'
-// };
+// }
 
-// User.register( data, ( err, response ) => {
-//   console.log( response );
-// });
+User.logout((err, response) => {
+	
+});

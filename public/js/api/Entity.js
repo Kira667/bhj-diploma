@@ -3,7 +3,8 @@
  * Имеет свойство URL, равно пустой строке.
  * */
 class Entity {
-  static URL = '';
+  static path = '';
+	static URL = `http://localhost:8000${User.path}`;
 
   /**
    * Запрашивает с сервера список данных.

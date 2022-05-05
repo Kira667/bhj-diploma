@@ -5,7 +5,6 @@
 const createRequest = async (options = {}) => {
   let { url, data, method, callback, responseType } = options;
 
-	console.log(data);
 	if (data === undefined) {
 		data = {};
 	}
