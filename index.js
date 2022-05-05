@@ -17,6 +17,7 @@ if(!db.get('users').value())
     setDefaultUser(db);
 
 const app = express();
+app.use(express.json());
 app.use(express.static(`${__dirname}/${PUBLIC_PATH}`));
 app.use(cors());
 app.use(cookieParser());

@@ -49,9 +49,18 @@ class User {
 			method: 'GET',
 			responseType: 'json',
 			callback: (err, response) => {
-				console.log(response);
-				response.json().then(data => {
-					console.log(data);
+				response.json()
+				.then(data => {
+					if (data.success === false) { // Если пользователь не авторизован
+						callback({
+							success: false,
+							error: 'Необходима авторизация'
+						}, { success: false, user: undefined });
+						User.unsetCurrent();
+					} else {
+						callback(null, { succes: true, user: data.user});
+						User.setCurrent(data.user);
+					}
 				});
 			}
 		});
@@ -85,7 +94,19 @@ class User {
    * User.setCurrent.
    * */
   static register(data, callback) {
-
+		createRequest({
+			url: User.URL + '/register',
+			method: 'POST',
+			responseType: 'json',
+			data: data,
+			callback: (err, response) => {
+				console.log(response);
+				response.json()
+				.then(dataRes => {
+					console.log(dataRes);
+				});
+			}
+		});
   }
 
   /**
@@ -97,3 +118,12 @@ class User {
   }
 }
 
+const data = {
+  name: 'Vlad',
+  email: 'test@test123.ru',
+  password: 'abracadabra'
+};
+
+User.register( data, ( err, response ) => {
+  console.log( response );
+});

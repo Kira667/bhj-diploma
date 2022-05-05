@@ -3,25 +3,36 @@
  * на сервер.
  * */
 const createRequest = async (options = {}) => {
-  const { url, data = {}, method, callback } = options;
+  let { url, data, method, callback, responseType } = options;
+
+	console.log(data);
+	if (data === undefined) {
+		data = {};
+	}
   
   if (method === 'GET') {
-    await requestGet({ url, data, callback });
+    await requestGet({ url, data, callback, responseType });
   } else {
-    await requestNoGet({ url, data, method, callback });
+    await requestNoGet({ url, data, method, callback, responseType });
   } 
 };
 
 async function requestGet(options = {}) {
-  const { url, data, callback } = options;
+  const { url, data, callback, responseType } = options;
   const fullUrl = createUrlBasedOnParams(url, data);
+	const headersJSON = {
+		'Content-Type': 'application/json',
+    'Accept': 'application/json'
+	};
+	const headers = {};
+
+	if (responseType === 'json') {
+		Object.assign(headers, headersJSON);
+	}
 
   await fetch(fullUrl, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    	'Accept': 'application/json'
-  }})
+    headers: headers})
   .then(res => {
     if (res.ok === true) {
       callback(null, res);
@@ -33,20 +44,26 @@ async function requestGet(options = {}) {
 }
 
 async function requestNoGet(options = {}) {
-  const { url, data, callback, method } = options;
-  const formData = new FormData();
+  const { url, data, callback, method, responseType } = options;
+  // const formData = new FormData();
+	const headersJSON = {
+		'Content-Type': 'application/json',
+    'Accept': 'application/json'
+	};
+	const headers = {};
 
-  for (const dataKey in data) {
-    formData.append(dataKey, data[dataKey]);
-  }
+  // for (const dataKey in data) {
+  //   formData.append(dataKey, data[dataKey]);
+  // }
+
+	if (responseType === 'json') {
+		Object.assign(headers, headersJSON);
+	}
 
   await fetch(url, {
     method: method,
-    headers: {
-      'Content-Type': 'application/json',
-    	'Accept': 'application/json'
-    },
-    body: JSON.stringify(formData)
+    headers: headers,
+    body: JSON.stringify(data)
   })
   .then(res => {
     if (res.ok === true) {
@@ -81,18 +98,3 @@ function createUrlBasedOnParams(baseUrl, data) {
 
   return url;
 }
-
-// createRequest({
-//   url: 'https://jsonplaceholder.typicode.com/todos/',
-//   data: {
-//     mail: 'ivan@biz.pro',
-//     password: 'odinodin',
-//     credit: 34000
-//   },
-//   method: 'GET',
-//   callback: ( err, response ) => {
-//     // console.log( err, 'createRequest err' ); // null
-//     // console.log( response, 'createRequest response' ); // ответ
-//   }
-// });
-

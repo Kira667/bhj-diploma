@@ -1,10 +1,16 @@
 {
   "users": [
     {
-      "name": "demo",
-      "email": "demo@demo",
-      "password": "demo",
-      "id": "1"
+      "name": "Vlad",
+      "email": "test@test12.ru",
+      "password": "abracadabra",
+      "id": "11jmc2kl2srgrj9"
+    },
+    {
+      "name": "Vlad",
+      "email": "test@test123.ru",
+      "password": "abracadabra",
+      "id": "11jm3c4l2srhdc9"
     }
   ],
   "accounts": [

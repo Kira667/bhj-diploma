@@ -11,6 +11,7 @@ const FileSync = require('lowdb/adapters/FileSync', {
 
 //Запрос регистрации пользователя
 router.post("/register",upload.none(), function(request, response) {
+		console.log(request.body);
     const db = low(new FileSync('db.json'));// получение БД
     //получение параметров из тела запроса
     const { name, email, password } = request.body;
@@ -31,7 +32,7 @@ router.post("/register",upload.none(), function(request, response) {
 
     //нахождение такого же пользователя по email
     let user = db.get("users").find({email}).value();
-    if(!user){//если существующий пользователь не найден...
+    if(!user && name !== undefined && email !== undefined && password !== undefined) { //если существующий пользователь не найден... и все поля присутствуют
         //создаётся пользователя
         user = { name, email, password, id:uniqid() };
         //записывается в БД
@@ -40,10 +41,12 @@ router.post("/register",upload.none(), function(request, response) {
         //отправляется созданный пользователь
         response.json({success: true, user});
     }
-    else{//если существующий пользователь найден...
+    else if (user) { //если существующий пользователь найден...
         //Отправляется ошибка о том, что пользователь такой уже существует
         response.json({success: false, error: `E-Mail адрес ${email} уже существует.`});
-    }
+    } else {
+			response.json({success: false, error: `Вы передали какой-то мусор`});
+		}
 })
 
 //запрос авторизации пользователя
