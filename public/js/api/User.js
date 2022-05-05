@@ -118,12 +118,12 @@ class User {
   }
 }
 
-const data = {
-  name: 'Vlad',
-  email: 'test@test123.ru',
-  password: 'abracadabra'
-};
+// const data = {
+//   name: 'Vlad',
+//   email: 'test@test123.ru',
+//   password: 'abracadabra'
+// };
 
-User.register( data, ( err, response ) => {
-  console.log( response );
-});
+// User.register( data, ( err, response ) => {
+//   console.log( response );
+// });
