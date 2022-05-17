@@ -13,7 +13,12 @@ class AsyncForm {
    * через registerEvents()
    * */
   constructor(element) {
+		if (!element instanceof Element) {
+			throw new Error('Переданный элемент в constructor Modal не наследуется от класса Element');
+		}
 
+		this.element = element;
+		this.registerEvents();
   }
 
   /**

@@ -80,3 +80,11 @@
 .transaction__controls {
   line-height: 70px;
 }
+
+.modal {
+	display: none;
+}
+
+.modal_active {
+	display: block;
+}

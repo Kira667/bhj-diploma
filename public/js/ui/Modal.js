@@ -11,17 +11,29 @@ class Modal {
    * Если переданный элемент не существует,
    * необходимо выкинуть ошибку.
    * */
-  constructor(element){
+  constructor(element) {
+		if (!element instanceof Element) {
+			throw new Error('Переданный элемент в constructor Modal не наследуется от класса Element');
+		}
 
+		this.element = element;
+		this.registerEvents();
   }
-
+	
   /**
    * При нажатии на элемент с data-dismiss="modal"
    * должен закрыть текущее окно
    * (с помощью метода Modal.onClose)
    * */
   registerEvents() {
+		const dataDismissNodes = this.element.querySelectorAll('[data-dismiss=modal]');
 
+		for (const buttonNode of dataDismissNodes) {
+			buttonNode.addEventListener('click', (e) => {
+				this.onClose(e);
+			});
+		}
+		
   }
 
   /**
@@ -29,19 +41,19 @@ class Modal {
    * Закрывает текущее окно (Modal.close())
    * */
   onClose(e) {
-
+		this.close();
   }
   /**
    * Открывает окно: устанавливает CSS-свойство display
    * со значением «block»
    * */
   open() {
-
+		this.element.classlist.add('.modal_active');
   }
   /**
    * Закрывает окно: удаляет CSS-свойство display
    * */
   close(){
-
+		this.element.classlist.remove('.modal_active');
   }
 }
