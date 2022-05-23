@@ -57,3 +57,16 @@ class Modal {
 		this.element.classlist.remove('.modal_active');
   }
 }
+
+// class Test {
+// 	constructor(element) {
+// 		console.log(element);
+// 	}
+// }
+
+// const elements = document.querySelectorAll('.modal');
+
+// // console.log(elements[3]);
+// for (let i = 0; i < elements.length; i++) {
+// 	new Test(elements[i]);
+// }

@@ -16,7 +16,6 @@ class AsyncForm {
 		if (!element instanceof Element) {
 			throw new Error('Переданный элемент в constructor Modal не наследуется от класса Element');
 		}
-
 		this.element = element;
 		this.registerEvents();
   }
@@ -26,7 +25,10 @@ class AsyncForm {
    * вызывает метод submit()
    * */
   registerEvents() {
-
+		this.element.addEventListener('submit', (event) => {
+			event.preventDefault();
+			this.submit();
+		});
   }
 
   /**
@@ -37,7 +39,21 @@ class AsyncForm {
    * }
    * */
   getData() {
+		const elementFormObj = {};
 
+		for (let i = 0; i < this.element.length; i++) {
+			if (!(this.element[i] instanceof HTMLButtonElement)) {
+				const name = this.element[i].name;
+				const value = this.element[i].value;
+				elementFormObj[name] = value;
+			}
+		}
+
+		
+
+		return elementFormObj;
+		// console.log(this.element.length);
+		// console.log(this.element.elements);
   }
 
   onSubmit(options){
@@ -49,6 +65,6 @@ class AsyncForm {
    * данные, полученные из метода getData()
    * */
   submit() {
-
+		this.onSubmit(this.getData());
   }
 }
