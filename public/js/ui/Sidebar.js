@@ -19,6 +19,7 @@ class Sidebar {
    * */
   static initToggleButton() {
 		const sidebarToggleNode = document.querySelector('.sidebar-toggle');
+
 		sidebarToggleNode.addEventListener('click', (e) => {
 			if (document.body.classList.contains('sidebar-collapse')) {
 				document.body.classList.remove('sidebar-open', 'sidebar-collapse')
@@ -31,11 +32,33 @@ class Sidebar {
   /**
    * При нажатии на кнопку входа, показывает окно входа
    * (через найденное в App.getModal)
-   * При нажатии на кнопку регастрации показывает окно регистрации
+   * При нажатии на кнопку рекастрации показывает окно регистрации
    * При нажатии на кнопку выхода вызывает User.logout и по успешному
    * выходу устанавливает App.setState( 'init' )
    * */
   static initAuthLinks() {
+		const sidebarMenuNode = document.querySelector('.sidebar-menu');
+		const menuItemRegisterNode = sidebarMenuNode.querySelector('.menu-item_register');
+		const menuItemLoginNode = sidebarMenuNode.querySelector('.menu-item_login');
+		const menuItemLogoutNode = sidebarMenuNode.querySelector('.menu-item_logout');
+		const instanceRegisterModal = App.getModal('register');
+		const instanceLoginModal = App.getModal('login');
 
+		menuItemRegisterNode.addEventListener('click', (e) => {
+			instanceRegisterModal.open();
+		});
+
+		menuItemLoginNode.addEventListener('click', (e) => {
+			instanceLoginModal.open();
+		});
+
+		menuItemLogoutNode.addEventListener('click', (e) => {
+			User.logout((err, data) => {
+				if (data.success === true) {
+					App.setState('init');
+				}
+			});
+
+		});
   }
 }

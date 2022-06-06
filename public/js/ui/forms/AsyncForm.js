@@ -56,7 +56,7 @@ class AsyncForm {
 		// console.log(this.element.elements);
   }
 
-  onSubmit(options){
+  onSubmit(options) {
 
   }
 

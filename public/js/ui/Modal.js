@@ -48,13 +48,13 @@ class Modal {
    * со значением «block»
    * */
   open() {
-		this.element.classlist.add('.modal_active');
+		this.element.classList.add('modal_active');
   }
   /**
    * Закрывает окно: удаляет CSS-свойство display
    * */
   close(){
-		this.element.classlist.remove('.modal_active');
+		this.element.classList.remove('modal_active');
   }
 }
 

@@ -5,6 +5,18 @@
       "email": "test@test123.ru",
       "password": "abracadabra",
       "id": "11jm19kl2srnz05"
+    },
+    {
+      "name": "Кира",
+      "email": "Kkg80@yandex.ru",
+      "password": "kira24680",
+      "id": "11jmrfol42gucx3"
+    },
+    {
+      "name": "Михаил",
+      "email": "kamahinmihail@gmail.com",
+      "password": "123",
+      "id": "11jmsesl42gyvuf"
     }
   ],
   "accounts": [
