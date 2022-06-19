@@ -13,7 +13,7 @@ class Modal {
    * */
   constructor(element) {
 		if (!element instanceof Element) {
-			throw new Error('Переданный элемент в constructor Modal не наследуется от класса Element');
+			throw new Error('Переданный элемент в constructor не наследуется от класса Element');
 		}
 
 		this.element = element;

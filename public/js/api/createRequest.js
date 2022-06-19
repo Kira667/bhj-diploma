@@ -51,10 +51,6 @@ async function requestNoGet(options = {}) {
 	};
 	const headers = {};
 
-  // for (const dataKey in data) {
-  //   formData.append(dataKey, data[dataKey]);
-  // }
-
 	if (responseType === 'json') {
 		Object.assign(headers, headersJSON);
 	}

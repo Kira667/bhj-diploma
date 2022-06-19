@@ -12,7 +12,10 @@ class UserWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor(element){
-
+		if (!element instanceof Element) {
+			throw new Error('Переданный элемент в constructor не наследуется от класса Element');
+		}
+		this.element = element;
   }
 
   /**
@@ -23,6 +26,11 @@ class UserWidget {
    * авторизованного пользователя
    * */
   update(){
+		const user = User.current();
+		const userNameNode = document.querySelector('.user-name');
 
+		if (user !== undefined) {
+			userNameNode.textContent = user.name;
+		}
   }
 }

@@ -85,8 +85,8 @@ class User {
       callback: (err, response) => {
 				response.json()
 				.then(dataRes => {
-					
 					if (dataRes.success === true) {
+						User.setCurrent(dataRes.user);
 						callback(err, dataRes);
 					} else {
 						callback(err, dataRes);

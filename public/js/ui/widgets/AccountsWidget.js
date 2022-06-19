@@ -14,7 +14,12 @@ class AccountsWidget {
    * необходимо выкинуть ошибку.
    * */
   constructor( element ) {
-
+		if (!element instanceof Element) {
+			throw new Error('Переданный элемент в constructor не наследуется от класса Element');
+		}
+		this.element = element;
+		this.registerEvents();
+		this.update();
   }
 
   /**
@@ -25,7 +30,11 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
+		const createAccountNode = document.querySelector('.create-account');
 
+		createAccountNode.addEventListener('click', (e) => {
+
+		});
   }
 
   /**
